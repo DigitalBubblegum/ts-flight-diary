@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import express from 'express';
 import diaryService from '../services/diaryService';
 const router = express.Router();
@@ -14,8 +15,14 @@ router.get('/:id',(req,res)=>{
     }
 });
 
-router.post('/',(_req,res)=>{
-    res.send('Saving a diary entry');
+router.post('/',(req,res)=>{
+    const {date,weather,visibility,comment} = req.body;
+    const addedEntry = diaryService.addDiary({
+        date,
+        weather,
+        visibility,
+        comment});
+    res.json(addedEntry);
 });
 
 export default router;
